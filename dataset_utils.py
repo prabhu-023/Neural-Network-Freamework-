@@ -45,38 +45,44 @@ def load_csv_dataset(filepath, target_column,categorical_columns, test_size=0.2,
     
     return X_train, X_test, y_train, y_test
 
-def get_dataset(name,classes,validate=False):
-    if name == 'spiral' and classes == 2:
-        if validate==False:
-            return load_spiral_data(samples=1000, classes=2)
-        elif validate==True:
-            return load_spiral_data(samples=100, classes=2)
 
-    elif name == 'spiral' and classes ==3:
-        if validate==False:
-            return load_spiral_data(samples=1000, classes=3)
-        elif validate==True:
-            return load_spiral_data(samples=100, classes=3)
+def get_dataset(name, classes=None, validate=False):
+    """Load one of the predefined datasets.
+
+    Parameters
+    ----------
+    name : str
+        ``"spiral"`` for the spiral dataset, ``"sine"`` for the sine wave
+        dataset or ``"csv"`` for a CSV file.
+    classes : int, optional
+        Number of classes for the spiral dataset. If ``None`` the user will be
+        asked for the value when ``name`` is ``"spiral"``.
+    validate : bool, optional
+        When ``True`` a smaller dataset suitable for validation is returned.
+    """
+
+    if name == 'spiral':
+        if classes is None:
+            classes = int(input("Enter the number of classes (2 or 3): ").strip())
+        samples = 100 if validate else 1000
+        return load_spiral_data(samples=samples, classes=classes)
 
     elif name == 'sine':
-        if validate==False:
-            return load_sine_data(samples=1000)
-        elif validate==True:
-            return load_sine_data(samples=100)
+        samples = 100 if validate else 1000
+        return load_sine_data(samples=samples)
 
     elif name == 'csv':
-        filepath = (input("Enter the path to the CSV file: "))
-        target_column = (input("Enter the target column name: "))
-        categorical_column = (input("Enter the categotical columns index separeated by comma: "))
-        c_c = [int(x.strip()) for x in categorical_column.split(",") if x.strip()]
+        filepath = input("Enter the path to the CSV file: ")
+        target_column = input("Enter the target column name: ")
+        categorical_column = input("Enter the categotical columns index separeated by comma: ")
+        c_c = [int(x.strip()) for x in categorical_column.split(',') if x.strip()]
         if not filepath or not target_column:
             raise ValueError("Filepath and target_column must be provided for CSV datasets")
-        
-        return load_csv_dataset(filepath, target_column,c_c)
+
+        return load_csv_dataset(filepath, target_column, c_c)
     else:
         raise ValueError("Unknown dataset. Options: 'spiral', 'sine', 'csv'")
 
 
-
-#print(os.getcwd())
-#X_train, X_test, y_train, y_test = get_dataset(name)
+# Example usage:
+# X, y = get_dataset('spiral', classes=3)
