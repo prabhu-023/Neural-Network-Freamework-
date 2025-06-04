@@ -46,9 +46,12 @@ def get_loss_function(problem_type):
 
 
 def main():
-    # Load dataset
+    # Load dataset with user-specified options
     dataset_name = input("Choose a dataset (spiral, sine, csv): ").strip().lower()
-    X, y = get_dataset(dataset_name)
+    classes = int(input("Enter the number of classes: ").strip())
+    validate_input = input("Validate the model? (y/n): ").strip().lower()
+    validate = validate_input in ("y", "yes", "true", "1")
+    X, y = get_dataset(dataset_name, classes, validate)
     print(X[:5], "\n")
     print(len(set(y)))
     output_size = 0
