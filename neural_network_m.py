@@ -88,7 +88,7 @@ class Soft_max:
 
 
 
-#Dropot Layer
+# Dropout Layer
 class Dropout:
     """
     Dropout Layer: Randomly sets a fraction of inputs to 0 during training to prevent overfitting.
