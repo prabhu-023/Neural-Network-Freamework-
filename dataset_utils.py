@@ -67,7 +67,7 @@ def get_dataset(name,classes,validate=False):
     elif name == 'csv':
         filepath = (input("Enter the path to the CSV file: "))
         target_column = (input("Enter the target column name: "))
-        categorical_column = (input("Enter the categotical columns index separeated by comma: "))
+        categorical_column = (input("Enter the categorical columns index separated by comma: "))
         c_c = [int(x.strip()) for x in categorical_column.split(",") if x.strip()]
         if not filepath or not target_column:
             raise ValueError("Filepath and target_column must be provided for CSV datasets")
